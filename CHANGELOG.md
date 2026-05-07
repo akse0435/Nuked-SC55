@@ -15,6 +15,22 @@
   CTF-patched roms thanks to @akse0435. (#58, #59)
 - Fixed a bug that caused `--legacy-romset-detection` to fail loading any roms.
   (#60)
+- Fixed the hash based rom loader incorrectly mixing and matching roms from
+  different romset versions.
+- Reduced the amount of hashing done when loading roms by hash.
+- Added the ability to load specific versions of romsets when loading roms by
+  hash. Pass `--help` to see the list of accepted names.
+
+## Notes for developers
+
+This release contains a large breaking refactor of the hash based rom loader.
+`AllRomsetInfo` has been removed because there is not a 1:1 mapping between
+`Romset`s and specific versions of that romset. Many functions in `rom_io` have
+been changed to operate on `RomsetInfo` instead. To deal with this new
+requirement, `DetectRomsetsByHash` has been replaced with two types:
+`HashedFileRegistry` for storing file hashes and `RomsetHashRegistry` for
+storing romset hashes. These provide more control over how roms are located and
+are easier to use.
 
 # Version 0.6.1 (2025-07-30)
 
